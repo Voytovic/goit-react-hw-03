@@ -6,7 +6,7 @@ export default function SearchBox({ inputValue, setInputValue }) {
   };
 
   return (
-    <div className={css['input-container']}>
+    <div className={css['input-cont']}>
       <label htmlFor="">Find contacts by name</label>
       <input
         type="text"

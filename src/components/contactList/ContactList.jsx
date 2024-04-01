@@ -3,7 +3,7 @@ import Contact from '../contact/Contact.jsx';
 
 export default function ContactList({ filteredContacts, deleteContact }) {
   return (
-    <div className={css['container-contacts']}>
+    <div className={css['container-cont']}>
       {filteredContacts.map(({ id, name, number }) => (
         <Contact
           key={id}

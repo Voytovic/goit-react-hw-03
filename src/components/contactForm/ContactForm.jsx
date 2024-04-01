@@ -34,8 +34,8 @@ export default function ContactForm({ onSubmit }) {
         validationSchema={FeedbackSchema}
       >
         <Form className={css['form']}>
-          <div className={css['form-container']}>
-            <div className={css['input-container']}>
+          <div className={css['form-cont']}>
+            <div className={css['input-cont']}>
               <label htmlFor="nameId" className={css['form-label']}>
                 Name
               </label>
@@ -48,7 +48,7 @@ export default function ContactForm({ onSubmit }) {
               <ErrorMessage name="name" as="span" />
             </div>
 
-            <div className={css['input-container']}>
+            <div className={css['input-cont']}>
               <label htmlFor="telId" className={css['form-label']}>
                 Number
               </label>

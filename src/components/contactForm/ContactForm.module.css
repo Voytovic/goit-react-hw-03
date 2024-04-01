@@ -6,7 +6,7 @@
   padding: 10px;
 }
 
-.form-container {
+.form-cont {
   display: flex;
   width: 280px;
   gap: 10px;
@@ -14,7 +14,7 @@
   margin-bottom: 10px;
 }
 
-.input-container {
+.input-cont {
   display: flex;
   flex-direction: column;
 }
