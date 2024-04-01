@@ -1,4 +1,12 @@
 #root {
-  max-width: 1280px;
-  padding: 24px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.container {
+  text-align: left;
+}
+.title {
+  margin-bottom: 20px;
 }

@@ -1,60 +1,58 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import ContactList from './components/contactList/ContactList';
+import SearchBox from './components/searchBox/SearchBox';
+import ContactForm from './components/contactForm/ContactForm.jsx';
+import { nanoid } from 'nanoid';
 import './App.css';
-import Options from './components/options/Options';
-import Feedback from './components/feedback/Feedback';
-import Notification from './components/notification/Notification';
-import Description from './components/description/description';
 
-const App = () => {
-  const [feedback, setFeedback] = useState(() => {
-    const savedFeedback = localStorage.getItem('feedback');
-    return savedFeedback
-      ? JSON.parse(savedFeedback)
-      : { good: 0, neutral: 0, bad: 0 };
+function App() {
+  const initialInfo = [
+    { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+    { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
+    { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
+    { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+  ];
+
+  const [inputValue, setInputValue] = useState('');
+  const [contacts, setContacts] = useState(() => {
+    const savedContacts = localStorage.getItem('contact');
+    return savedContacts ? JSON.parse(savedContacts) : initialInfo;
   });
 
-  const updateFeedback = feedbackType => {
-    setFeedback(prevFeedback => ({
-      ...prevFeedback,
-      [feedbackType]: prevFeedback[feedbackType] + 1,
-    }));
-  };
-
-  const totalFeedback = feedback.good + feedback.neutral + feedback.bad;
-
-  const resetFeedback = () => {
-    setFeedback({ good: 0, neutral: 0, bad: 0 });
-  };
-
   useEffect(() => {
-    localStorage.setItem('feedback', JSON.stringify(feedback));
-  }, [feedback]);
+    localStorage.setItem('contact', JSON.stringify(contacts), [contacts]);
+  }, [contacts]);
 
-  const percentagePositive = Math.round(
-    ((feedback.good + feedback.neutral) / totalFeedback) * 100
+  const addContact = contact => {
+    const newContact = {
+      id: nanoid(),
+      name: contact.name,
+      number: contact.tel,
+    };
+    setContacts([...contacts, newContact]);
+  };
+
+  const deleteContact = id => {
+    setContacts(contacts.filter(contact => contact.id !== id));
+  };
+
+  const filteredContacts = contacts.filter(contact =>
+    contact.name.toLowerCase().includes(inputValue.toLowerCase())
   );
 
   return (
-    <div>
-      <Description />
-      <Options
-        updateFeedback={updateFeedback}
-        resetFeedback={resetFeedback}
-        totalFeedback={totalFeedback}
-      />
-      {totalFeedback > 0 ? (
-        <Feedback
-          feedback={feedback}
-          totalFeedback={totalFeedback}
-          percentagePositive={
-            isNaN(percentagePositive) ? 0 : percentagePositive
-          }
+    <>
+      <div className="container">
+        <h1 className="title">Phonebook</h1>
+        <ContactForm onSubmit={addContact} />
+        <SearchBox inputValue={inputValue} setInputValue={setInputValue} />
+        <ContactList
+          filteredContacts={filteredContacts}
+          deleteContact={deleteContact}
         />
-      ) : (
-        <Notification message="No feedback given yet." />
-      )}
-    </div>
+      </div>
+    </>
   );
-};
+}
 
 export default App;
